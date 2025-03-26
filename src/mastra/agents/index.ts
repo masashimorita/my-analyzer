@@ -1,6 +1,8 @@
 import { openai } from '@ai-sdk/openai';
 import { Agent } from '@mastra/core/agent';
 import { weatherTool } from '../tools';
+import { cloneRepositoryTool } from '../tools/github/cloneRepository';
+import { openAiModel } from '../models';
 
 export const weatherAgent = new Agent({
   name: 'Weather Agent',
@@ -18,4 +20,14 @@ export const weatherAgent = new Agent({
 `,
   model: openai('gpt-4o-mini'),
   tools: { weatherTool },
+});
+
+
+export const githubAnalysisAgent = new Agent({
+  name: "GitHub Analysis Agent",
+  instructions: "Agent to analyze Github Repository. Specify repository URL to clone repository and analyze",
+  model: openAiModel,
+  tools: {
+    cloneRepositoryTool,
+  },
 });
